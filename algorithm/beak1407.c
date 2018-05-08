@@ -33,24 +33,17 @@ int func(int num)			//입력 받은 값중에서 가장 큰 배수 리턴
 
 int main(void)  
 { 
-	int num1, num2, diff, i, res=0;
+	int num1, num2, res=0;
 	printf("자연수 Num1 : ");
 	scanf("%d", &num1);
 	printf("자연수 Num2 : ");
 	scanf("%d", &num2);
-
-	if(num1>num2)
-		diff = num1 - num2 +1;
-	else
-		diff = num2 - num1 +1;
-
-	for(i=0;i<diff; i++)
+	
+	while(num1<=num2)
 	{
-		res = res + func(num1);
-		num1++;
-
-		
+		res += func(num1++);
 	}
+	
 
 	printf("%d \n", res);
 
