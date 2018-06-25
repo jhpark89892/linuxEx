@@ -11,7 +11,7 @@ result : 50005000
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
-#define THR_SIZE 5
+#define THR_SIZE 10
 
 int sum =0;
 struct ARG
@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
 	int i;
 	int thread_cnt;
 	int num;
-	double ADD_SIZE;
+	int ADD_SIZE;
 
 	if(argc!=3)
 	{
@@ -52,13 +52,17 @@ int main(int argc, char *argv[])
 	thread_cnt = atoi(argv[1]);
 	num = atoi(argv[2]);
 	
-	//나누어 떨어지지않는 숫자반올림을 위해
-	ADD_SIZE = num/thread_cnt + 0.5;
+	ADD_SIZE = num/thread_cnt;
 
 	for(i=0;i<thread_cnt; i++)
 	{
 		arg->start=ADD_SIZE*i+1;
 		arg->end=ADD_SIZE*(i+1);
+		
+		//나누어 떨어지지 않는 값에 대한 보정
+		if(i==thread_cnt -1)
+			arg->end= arg->end + (num % thread_cnt);
+
 		printf("range[%d][0] = %d\n", i, arg->start);
 		printf("range[%d][1] = %d\n", i, arg->end);
 		
