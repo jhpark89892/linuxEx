@@ -1,26 +1,17 @@
 #makefile
-.SUFFIXES : .c .o
 
 OBJECTS = main.o \
-	 	print.o \
-		input.o 
-SRCS = $(OBJECTS:.o=.c)
-
+	  I2C_RW.o \
+	  motorControl.o 
 CFLAGS = -g
 TARGET = main
 CC = gcc
+LIBS = -lwiringPi
+LIB_DIRS = /home/pi/wiringPi/wiringPi
 
-#$@ 현재 목표 파일의 이름
+
 $(TARGET) : $(OBJECTS)
-	$(CC) -o $@ $(OBJECTS)
-
-#$< 현재 목표 파일(TARGET)보다 더 최근에 갱신된 파일명으로,
-#첫번째 종속물의 이름
-.c.o :
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) -o $@ $(OBJECTS) $(LIBS)
 
 clean:
-	$(RM) $(OBJECTS) $(TARGET) core
-main.o : main.c
-print.o: print.c
-input.o: input.c
+	rm *.o $(TARGET)
